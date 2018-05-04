@@ -114,7 +114,6 @@ public class TankPic extends PicturePS {
     rotate(angle);
 
     // Draw the entity  
-    System.out.println(team.getTeamName());
     if(team.getTeamName() == "teamA"){
       fill((((255/6) * health) * 40), 50, 50, 255 - health*60);
     }else if(team.getTeamName() == "teamB"){

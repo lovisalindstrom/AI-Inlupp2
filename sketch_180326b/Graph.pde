@@ -17,16 +17,16 @@ public void createGraph(){
         Node nuvarande = (Node)hm.get(new CordinateKey(x,y));
         nuvarande.setNorthNode(ovan);
         hm.put(new CordinateKey(x,y), new Node(x,y));
-        System.out.println("ovan: "+ ovan);
-        System.out.println(nuvarande.northNode);
-        System.out.println("-----------------");
+        //System.out.println("ovan: "+ ovan);
+        //System.out.println(nuvarande.northNode);
+        //System.out.println("-----------------");
        }
        if(y != 10){
          Node bakom = (Node)hm.get(new CordinateKey(x,y-100));
          Node nuvarande = (Node)hm.get(new CordinateKey(x,y));
-         System.out.println("bakom: "+ bakom);
-         System.out.println(nuvarande.northNode);
-         System.out.println("-----------------");
+         //System.out.println("bakom: "+ bakom);
+         //System.out.println(nuvarande.northNode);
+         //System.out.println("-----------------");
        }
      } 
       

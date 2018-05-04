@@ -25,6 +25,9 @@ Team teamB;
 ArrayList <TankOne> tanks = new ArrayList<TankOne>();
 ArrayList<Obstacle> obstacles = new ArrayList<Obstacle>();
 
+int savedTime;
+int totalTime = 180;
+
 TankPic tankPic;
 BitmapPic obstaclePic;
 
@@ -36,11 +39,11 @@ void setup() {
   Domain domain = new Domain(0, 0, 800, 800);
 
   t1t1 = createTank(domain,40, 50,true, teamA);
-  t1t2 = createTank(domain,40, 150,false, teamA);
-  t1t3 = createTank(domain,40, 250,false, teamA);
-  t1t4 = createTank(domain,760, height-50,false, teamB);
-  t1t5 = createTank(domain,760, height-150,false, teamB);
-  t1t6 = createTank(domain,760, height-250,false, teamB);
+  t1t2 = createTank(domain,40, 150,true, teamA);
+  t1t3 = createTank(domain,40, 250,true, teamA);
+  t1t4 = createTank(domain,760, height-50,true, teamB);
+  t1t5 = createTank(domain,760, height-150,true, teamB);
+  t1t6 = createTank(domain,760, height-250,true, teamB);
 
   ob1 = createObstacle(domain, 230, 600);
   ob2 = createObstacle(domain, 280, 220);
@@ -63,6 +66,7 @@ void setup() {
   world.add(ob2);
   world.add(ob3);
   sw.reset();
+  savedTime = millis();
 
 }
 
@@ -78,8 +82,17 @@ void displayHomeBaseTeam2() {
   rect(width - 151, height - 351, 150, 350);
 }
 
+public void timer(){
+  int passedTime = ((millis() - savedTime) / 1000);
+  System.out.println(passedTime);
+  if(passedTime > totalTime){
+    exit();
+  }
+}
+
 void draw(){
   
+  timer();
   t1t1.lookForTank();
   double elapsedTime = sw.getElapsedTime();
   world.update(elapsedTime);
