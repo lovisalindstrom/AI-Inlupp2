@@ -10,6 +10,9 @@ public class TankOne extends Vehicle{
   boolean collision;
   Turret turret;
   Team team;
+  Audio myAudio;
+  AudioPlayer audioBlast;
+  AudioPlayer audioShot;
 
   public TankOne(Vector2D position, double radius, Vector2D velocity, 
   double max_speed, Vector2D heading, double mass, 
@@ -31,6 +34,10 @@ public class TankOne extends Vehicle{
     for (int i = 0; i < tanks.size(); i++) {
       if (canSee(world, tanks.get(i).pos()) && tanks.get(i) != this) {
         //System.out.println("HITTAD");
+        
+        myAudio = new Audio();
+        myAudio.blast();
+        
       }else{
        //System.out.println("INTE HITTAD"); 
       }

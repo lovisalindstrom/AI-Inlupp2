@@ -8,7 +8,7 @@ public class Turret {
   float radius;
   int cannon_length;
   Shell shell;
-  ShellPic shellPic
+  ShellPic shellPic;
   
   public Turret(float xPos, float yPos, float radius, int cannon_length){
     this.xPos = xPos;
@@ -39,7 +39,8 @@ public class Turret {
     1.5, // mass
     2.5f, // turning rate
     2500);
-     shellPic = new ShellPic(); 
+    //shellPic = new ShellPic(Shellpic, (float)25);
+    
     return shell;
   }
   
@@ -49,4 +50,8 @@ public class Turret {
     //shell.run();
     
   }
+  
+  /*public void shot(){
+    Shell.Translate(TankOne.heading(), yPos.heading());
+  }*/
 }

@@ -19,6 +19,7 @@ public class Shell extends Vehicle{
     this.position = position;
   }
 
+}
 
 public class ShellPic extends PicturePS {
   int head;
@@ -60,7 +61,6 @@ public class ShellPic extends PicturePS {
     popMatrix();
     popStyle();
   }
-}
 }
 
 ////AI INLUPP 2

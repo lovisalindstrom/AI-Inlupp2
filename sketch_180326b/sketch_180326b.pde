@@ -10,8 +10,10 @@ import game2dai.steering.*;
 import game2dai.utils.*;
 import game2dai.graph.*;
 import java.util.*;
+import ddf.minim.*;
 
 World world;
+Minim minim;
 StopWatch sw;
 Obstacle ob1;
 Obstacle ob2;
@@ -34,6 +36,7 @@ TankPic tankPic;
 BitmapPic obstaclePic;
 
 void setup() {
+  minim = new Minim(this);
   createGraph();
   size(800, 800);
   teamA = new Team("teamA");
