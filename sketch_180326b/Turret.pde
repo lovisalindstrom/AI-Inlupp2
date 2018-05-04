@@ -8,6 +8,7 @@ public class Turret {
   float radius;
   int cannon_length;
   Shell shell;
+  ShellPic shellPic
   
   public Turret(float xPos, float yPos, float radius, int cannon_length){
     this.xPos = xPos;
@@ -29,9 +30,23 @@ public class Turret {
     display();
   }
   
+  public Shell createShell(){
+    shell = new Shell(new Vector2D(xPos,yPos), // position
+    25, // collision radius
+    Vector2D.ZERO, // velocity
+    100, // maximum speed
+    Vector2D.random(null), // heading
+    1.5, // mass
+    2.5f, // turning rate
+    2500);
+     shellPic = new ShellPic(); 
+    return shell;
+  }
+  
   public void display(){
     drawTurret();
-    shell = new Shell(xPos, yPos, 15);
-    shell.run();
+    shell = createShell();
+    //shell.run();
+    
   }
 }
