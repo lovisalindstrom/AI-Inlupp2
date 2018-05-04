@@ -1,17 +1,45 @@
-public class Shell{
+//AI INLUPP 2
+public class Shell extends Vehicle{
   PVector position;
   PVector velocity;
+  PVector acceleration;
   int radius;
+  boolean isCounting;
+  int savedTime;
+  int passedTime;
+  boolean isLoaded;  // The shot is loaded and ready to shoot (visible on screen.)
+  boolean isInMotion; // The shot is on its way.
+  boolean isVisible;
 
-  Shell(float x, float y, int radius) {
-    position = new PVector(x,y);
-    velocity = new PVector(0,0);
-    this.radius = radius;
+  Shell(Vector2D position, double radius, Vector2D velocity, 
+  double max_speed, Vector2D heading, double mass, 
+  double max_turn_rate, double max_force) {
+    super(position, radius, velocity, max_speed, heading, mass, max_turn_rate, 
+    max_force);
+    this.isInMotion = false;
+    this.isCounting = false;
+    this.isVisible = true;
   }
 
-  public void movement(){
-
+   void startTimer() {
+    //println("*** CannonBall.startTimer()");
+    this.isCounting = true;
+    this.savedTime = millis();
+    this.passedTime = 0;
+    
+  }
   
+  void resetTimer() {
+    //println("*** CannonBall.resetTimer()");
+    this.isCounting = false;
+    this.savedTime = 0;
+    this.passedTime = 0;
+    
+    this.isInMotion = false;
+    this.isLoaded = false;
+        
+    this.velocity.set(0,0,0);
+    this.acceleration.set(0,0,0);
   }
   
   public void drawShell(){

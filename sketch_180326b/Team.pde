@@ -1,3 +1,4 @@
+//AI INLUPP 2
 public class Team{
   String teamName;
   color teamColor;
