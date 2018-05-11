@@ -10,9 +10,16 @@ public class TankOne extends Vehicle{
   boolean collision;
   Turret turret;
   Team team;
+  
+  //Audio
   Audio myAudio;
   AudioPlayer audioBlast;
   AudioPlayer audioShot;
+  
+  //Timer
+  boolean waitingOver = true;
+  int savedTime;
+  int totalTime = 3000;
 
   public TankOne(Vector2D position, double radius, Vector2D velocity, 
   double max_speed, Vector2D heading, double mass, 
@@ -24,6 +31,11 @@ public class TankOne extends Vehicle{
     this.health = 3;
     this.team = team;
   }
+  
+  void setup(){
+  savedTime = millis();
+  waitingOver = true;
+  }
 
   public void moveForward(){
     position.add(velocity);
@@ -34,10 +46,12 @@ public class TankOne extends Vehicle{
     for (int i = 0; i < tanks.size(); i++) {
       if (canSee(world, tanks.get(i).pos()) && tanks.get(i) != this) {
         //System.out.println("HITTAD");
-        
-        myAudio = new Audio();
-        myAudio.blast();
-        
+        if(waitingOver == true){
+          myAudio = new Audio();
+          myAudio.blast();
+          waitingOver = false;
+          savedTime = millis();
+        }
       }else{
        //System.out.println("INTE HITTAD"); 
       }
@@ -45,7 +59,13 @@ public class TankOne extends Vehicle{
     
   }
   
- 
+  private void timer(){
+  int passedTime = (millis() - savedTime);
+  System.out.println(passedTime);
+  if(passedTime > totalTime){
+    waitingOver = true;
+  }
+}
   
   public void rotateCounterClock(){
 
@@ -120,6 +140,7 @@ public class TankPic extends PicturePS {
     pushMatrix();
     translate(posX, posY);
     rotate(angle);
+    timer();
 
     // Draw the entity  
     if(team.getTeamName() == "teamA"){
