@@ -10,7 +10,8 @@ public class TankOne extends Vehicle{
   boolean collision;
   Turret turret;
   Team team;
-  
+  long start = System.currentTimeMillis();
+
   //Audio
   Audio myAudio;
   AudioPlayer audioBlast;
@@ -46,11 +47,14 @@ public class TankOne extends Vehicle{
     for (int i = 0; i < tanks.size(); i++) {
       if (canSee(world, tanks.get(i).pos()) && tanks.get(i) != this) {
         //System.out.println("HITTAD");
-        if(waitingOver == true){
+        long finish = System.currentTimeMillis();
+        System.out.println(finish-start);
+        if(finish-start > 3000){
           myAudio = new Audio();
           myAudio.blast();
           waitingOver = false;
           savedTime = millis();
+          start = System.currentTimeMillis();
         }
       }else{
        //System.out.println("INTE HITTAD"); 
