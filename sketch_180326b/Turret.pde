@@ -7,14 +7,20 @@ public class Turret {
   float yPos;
   float radius;
   int cannon_length;
+  int value;
   Shell shell;
   ShellPic shellPic;
   
-  public Turret(float xPos, float yPos, float radius, int cannon_length){
+  public Turret(float xPos, float yPos, float radius, int cannon_length, int value){
     this.xPos = xPos;
     this.yPos = yPos;
     this.radius = radius;
     this.cannon_length = cannon_length;
+    this.value = value;
+  }
+  
+  public Turret(int value){
+      this.value = value;
   }
   
   public void drawTurret(){
@@ -22,8 +28,22 @@ public class Turret {
     //fill(204, 50, 50);
     fill(255);
     ellipse(xPos,yPos,25,25);
+    drawBomb();
     strokeWeight(2);
     line(0, 0, this.cannon_length, 0);
+  }
+  
+  public void drawBomb(){
+    fill(value);
+    ellipse(xPos, yPos, 15, 15);
+  }
+  
+  public void bombShot(){
+    value = 255;
+  }
+  
+  public void bombStay(){
+    value = 0;
   }
   
   public void run(){

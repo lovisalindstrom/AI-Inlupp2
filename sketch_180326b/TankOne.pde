@@ -35,6 +35,7 @@ public class TankOne extends Vehicle{
   
   void setup(){
   savedTime = millis();
+  turret = new Turret(0);
   waitingOver = true;
   }
 
@@ -42,6 +43,7 @@ public class TankOne extends Vehicle{
     position.add(velocity);
 
   }
+  
 
   public void lookForTank() {
     for (int i = 0; i < tanks.size(); i++) {
@@ -49,7 +51,8 @@ public class TankOne extends Vehicle{
         //System.out.println("HITTAD");
         long finish = System.currentTimeMillis();
         System.out.println(finish-start);
-        if(finish-start > 3000){
+        if(finish-start > 3000 && this.team.getTeamName() != tanks.get(i).team.getTeamName()){
+          turret.bombShot();
           myAudio = new Audio();
           myAudio.blast();
           waitingOver = false;
@@ -156,7 +159,7 @@ public class TankPic extends PicturePS {
     strokeWeight(2);
     line(0, 0, 25, 0);
     
-    turret = new Turret(0, 0, 20, 25);
+    turret = new Turret(0, 0, 20, 25, 0);
     turret.display();
     
 
