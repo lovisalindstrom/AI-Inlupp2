@@ -109,6 +109,7 @@ void draw(){
 }
 
 public TankOne createTank(Domain domain,int xPos,int yPos, Boolean movement, Team team){
+  tankPic = new TankPic(this, (float)50, team);
   TankOne tank = new TankOne(new Vector2D(xPos,yPos), // position
   25, // collision radius
   Vector2D.ZERO, // velocity
@@ -117,7 +118,8 @@ public TankOne createTank(Domain domain,int xPos,int yPos, Boolean movement, Tea
   1.5, // mass
   2.5f, // turning rate
   2500,
-  team);
+  team,
+  tankPic);
   if(movement){
     tank.AP().obstacleAvoidOn().wanderOn();
     tank.AP().wanderOn().wanderFactors(60, 30, 20);
@@ -125,7 +127,6 @@ public TankOne createTank(Domain domain,int xPos,int yPos, Boolean movement, Tea
   }
   tanks.add(tank);
 
-  tankPic = new TankPic(this, (float)50, team);
 
   tank.worldDomain(domain, SBF.REBOUND);
   tank.viewFactors(260, PApplet.TWO_PI/7);

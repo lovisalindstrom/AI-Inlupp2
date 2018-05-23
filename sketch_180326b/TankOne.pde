@@ -11,6 +11,7 @@ public class TankOne extends Vehicle{
   Turret turret;
   Team team;
   long start = System.currentTimeMillis();
+  TankPic tankPic;
 
   //Audio
   Audio myAudio;
@@ -24,19 +25,23 @@ public class TankOne extends Vehicle{
 
   public TankOne(Vector2D position, double radius, Vector2D velocity, 
   double max_speed, Vector2D heading, double mass, 
-  double max_turn_rate, double max_force, Team team){
+  double max_turn_rate, double max_force, Team team, TankPic tankPic){
     super(position, radius, velocity, max_speed, heading, mass, max_turn_rate, 
     max_force);
     this.radius = 20;
     this.position = position;
     this.health = 3;
     this.team = team;
+    this.tankPic = tankPic;
+    this.turret = new Turret(tankPic.posX,tankPic.posY,30,6,6);
+
   }
   
   void setup(){
   savedTime = millis();
-  turret = new Turret(0);
+
   waitingOver = true;
+  System.out.println("sdasdasdasdasdasdasdasdasd");
   }
 
   public void moveForward(){
@@ -51,7 +56,9 @@ public class TankOne extends Vehicle{
         //System.out.println("HITTAD");
         long finish = System.currentTimeMillis();
         System.out.println(finish-start);
+        
         if(finish-start > 3000 && this.team.getTeamName() != tanks.get(i).team.getTeamName()){
+          System.out.println(turret);
           turret.bombShot();
           myAudio = new Audio();
           myAudio.blast();
@@ -117,7 +124,7 @@ public class TankPic extends PicturePS {
   int head;
   float size;
   int health;
-
+  float posX,posY;
   public TankPic(PApplet app, float size, int body, Team team) {
     super(app);
     this.size = size;
