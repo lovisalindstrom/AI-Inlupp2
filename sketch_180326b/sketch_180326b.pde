@@ -59,7 +59,11 @@ void setup() {
   int selectedHint = -1;
   selectedHint = Hints.HINT_VIEW;
   t1t1.renderer().showHints(selectedHint);
-  
+  t1t2.renderer().showHints(selectedHint);
+  t1t3.renderer().showHints(selectedHint);
+  t1t4.renderer().showHints(selectedHint);
+  t1t5.renderer().showHints(selectedHint);
+  t1t6.renderer().showHints(selectedHint);
   
   world.add(t1t1);
   world.add(t1t2);
@@ -89,7 +93,7 @@ void displayHomeBaseTeam2() {
 
 public void timer(){
   int passedTime = ((millis() - savedTime) / 1000);
-  System.out.println(passedTime);
+  //System.out.println(passedTime);
   if(passedTime > totalTime){
     exit();
   }
@@ -99,6 +103,11 @@ void draw(){
   
   timer();
   t1t1.lookForTank();
+  t1t2.lookForTank();
+  t1t3.lookForTank();
+  t1t4.lookForTank();
+  t1t5.lookForTank();
+  t1t6.lookForTank();
   double elapsedTime = sw.getElapsedTime();
   world.update(elapsedTime);
   background(255);

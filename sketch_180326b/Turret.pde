@@ -36,7 +36,7 @@ public class Turret {
     } else {
       fill(0);
       ellipse(xPos, yPos, 15, 15);
-      System.out.println(hasBomb);
+      //System.out.println(hasBomb);
     }
   }
   

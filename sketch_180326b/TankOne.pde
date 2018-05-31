@@ -55,24 +55,37 @@ public class TankOne extends Vehicle{
       if (canSee(world, tanks.get(i).pos()) && tanks.get(i) != this) {
         //System.out.println("HITTAD");
         long finish = System.currentTimeMillis();
-        System.out.println(finish-start);
+        //System.out.println(finish-start);
         
         if(finish-start > 3000 && this.team.getTeamName() != tanks.get(i).team.getTeamName()){
-          System.out.println(turret);
-          //this.turret.bombShot();
-          turret.bombShot2();
-          System.out.println(turret.hasBomb);
-          myAudio = new Audio();
-          myAudio.blast();
-          waitingOver = false;
-          savedTime = millis();
-          start = System.currentTimeMillis();
+          double distance = Vector2D.dist(this.position, tanks.get(i).position);
+          if(health == 2 && distance > 60){
+            System.out.println("Flyyyyyyyy");
+         }else{
+           tanks.get(i).tankPic.healthDecrease();
+            shoot();
+          }
         }
       }else{
        //System.out.println("INTE HITTAD"); 
       }
     }
-    
+  }
+  
+  public void shoot(){
+    System.out.println(turret);
+    //this.turret.bombShot();
+    turret.bombShot2();
+    System.out.println(turret.hasBomb);
+    myAudio = new Audio();
+    myAudio.blast();
+    waitingOver = false;
+    savedTime = millis();
+    start = System.currentTimeMillis();
+  }
+  
+  public void healthDecrease(){
+    health -= 1;
   }
   
   private void timer(){
@@ -140,6 +153,9 @@ public class TankPic extends PicturePS {
     this.health = 3;
   }
 
+  public void healthDecrease(){
+    health -= 1;
+  }
 
   public void draw(BaseEntity user, float posX, float posY, float velX, 
   float velY, float headX, float headY, float etime) {
