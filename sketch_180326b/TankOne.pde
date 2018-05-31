@@ -33,7 +33,7 @@ public class TankOne extends Vehicle{
     this.health = 3;
     this.team = team;
     this.tankPic = tankPic;
-    this.turret = new Turret(tankPic.posX,tankPic.posY,30,6,6);
+    this.turret = new Turret(tankPic.posX,tankPic.posY,30,6);
 
   }
   
@@ -59,7 +59,9 @@ public class TankOne extends Vehicle{
         
         if(finish-start > 3000 && this.team.getTeamName() != tanks.get(i).team.getTeamName()){
           System.out.println(turret);
-          turret.bombShot();
+          //this.turret.bombShot();
+          turret.bombShot2();
+          System.out.println(turret.hasBomb);
           myAudio = new Audio();
           myAudio.blast();
           waitingOver = false;
@@ -166,7 +168,7 @@ public class TankPic extends PicturePS {
     strokeWeight(2);
     line(0, 0, 25, 0);
     
-    turret = new Turret(0, 0, 20, 25, 0);
+    turret = new Turret(0, 0, 20, 25);
     turret.display();
     
 
