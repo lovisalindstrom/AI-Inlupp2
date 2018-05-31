@@ -2,6 +2,8 @@
 public class TankOne extends Vehicle{
   int health = 10;
   int radius;
+  double max_speed;
+  double max_force;
   Vector2D position;
   Vector2D velocity;
   Vector2D heading;
@@ -34,7 +36,9 @@ public class TankOne extends Vehicle{
     this.team = team;
     this.tankPic = tankPic;
     this.turret = new Turret(tankPic.posX,tankPic.posY,30,6);
-
+    this.velocity = velocity;
+    this.max_speed = max_speed;
+    this.max_force = max_force;
   }
   
   void setup(){
@@ -44,13 +48,51 @@ public class TankOne extends Vehicle{
   System.out.println("sdasdasdasdasdasdasdasdasd");
   }
 
-  public void moveForward(){
-    position.add(velocity);
+  //public void moveForward(){
+  //  position.add(velocity);
 
+  //}
+  
+  public void setSpeed(Vector2D velocity, double max_speed, double max_force){
+    this.velocity = velocity;
+    this.max_speed = max_speed;
+    this.max_force = max_force;
   }
   
+  public void wander(){
+    this.AP().obstacleAvoidOn().wanderOn();
+    this.AP().wanderOn().wanderFactors(60, 30, 20);
+    this.AP().obstacleAvoidDetectBoxLength(15);
+  }
+  
+  public void runTank(){
+    
+    if(this.tankPic.health == 3){
+      lookForTank();
+    } else {
+      setSpeed(new Vector2D(0,0), 0, 0);
+      //this.AP().allOff();
+    //this.AP().obstacleAvoidOff().wanderOff();
+    //this.AP().wanderOff().wanderFactors(0, 0, 0);
+    //this.AP().obstacleAvoidDetectBoxLength(0);
+    }
+    if(this.tankPic.health == 2){
+      this.AP().wanderOff();
+    }
+    
+    //if(this.tankPic.health <= 1){
+    //  System.out.println("WanderOff");
+    //  this.AP().wanderOff();
+    //  if(this.tankPic.health == 1){
+    //    lookForTank();
+    //  }
+    //}else{
+    //  lookForTank();
+    //}
+  }
 
   public void lookForTank() {
+    wander();
     for (int i = 0; i < tanks.size(); i++) {
       if (canSee(world, tanks.get(i).pos()) && tanks.get(i) != this) {
         //System.out.println("HITTAD");
@@ -59,11 +101,12 @@ public class TankOne extends Vehicle{
         
         if(finish-start > 3000 && this.team.getTeamName() != tanks.get(i).team.getTeamName()){
           double distance = Vector2D.dist(this.position, tanks.get(i).position);
-          if(health == 2 && distance > 60){
+          if(tankPic.health == 2 && distance > 60){
             System.out.println("Flyyyyyyyy");
          }else{
            tanks.get(i).tankPic.healthDecrease();
             shoot();
+            System.out.println(tanks.get(i).tankPic.health);
           }
         }
       }else{
@@ -73,10 +116,10 @@ public class TankOne extends Vehicle{
   }
   
   public void shoot(){
-    System.out.println(turret);
+    //System.out.println(turret);
     //this.turret.bombShot();
     turret.bombShot2();
-    System.out.println(turret.hasBomb);
+    //System.out.println(turret.hasBomb);
     myAudio = new Audio();
     myAudio.blast();
     waitingOver = false;
@@ -84,9 +127,7 @@ public class TankOne extends Vehicle{
     start = System.currentTimeMillis();
   }
   
-  public void healthDecrease(){
-    health -= 1;
-  }
+
   
   private void timer(){
   int passedTime = (millis() - savedTime);
@@ -126,7 +167,6 @@ public class TankOne extends Vehicle{
   
   void display() {
     drawTank();
-
     turret.run();
   }
 

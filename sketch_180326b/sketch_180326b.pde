@@ -43,12 +43,12 @@ void setup() {
   teamB = new Team("teamB");
   Domain domain = new Domain(0, 0, 800, 800);
 
-  t1t1 = createTank(domain,40, 50,true, teamA);
-  t1t2 = createTank(domain,40, 150,true, teamA);
-  t1t3 = createTank(domain,40, 250,true, teamA);
-  t1t4 = createTank(domain,760, height-50,true, teamB);
-  t1t5 = createTank(domain,760, height-150,true, teamB);
-  t1t6 = createTank(domain,760, height-250,true, teamB);
+  t1t1 = createTank(domain,40, 50,teamA);
+  t1t2 = createTank(domain,40, 150,teamA);
+  t1t3 = createTank(domain,40, 250,teamA);
+  t1t4 = createTank(domain,760, height-50,teamB);
+  t1t5 = createTank(domain,760, height-150,teamB);
+  t1t6 = createTank(domain,760, height-250,teamB);
 
   ob1 = createObstacle(domain, 230, 600);
   ob2 = createObstacle(domain, 280, 220);
@@ -102,12 +102,12 @@ public void timer(){
 void draw(){
   
   timer();
-  t1t1.lookForTank();
-  t1t2.lookForTank();
-  t1t3.lookForTank();
-  t1t4.lookForTank();
-  t1t5.lookForTank();
-  t1t6.lookForTank();
+  t1t1.runTank();
+  t1t2.runTank();
+  t1t3.runTank();
+  t1t4.runTank();
+  t1t5.runTank();
+  t1t6.runTank();
   double elapsedTime = sw.getElapsedTime();
   world.update(elapsedTime);
   background(255);
@@ -117,7 +117,7 @@ void draw(){
   
 }
 
-public TankOne createTank(Domain domain,int xPos,int yPos, Boolean movement, Team team){
+public TankOne createTank(Domain domain,int xPos,int yPos, Team team){
   tankPic = new TankPic(this, (float)50, team);
   TankOne tank = new TankOne(new Vector2D(xPos,yPos), // position
   25, // collision radius
@@ -129,11 +129,11 @@ public TankOne createTank(Domain domain,int xPos,int yPos, Boolean movement, Tea
   2500,
   team,
   tankPic);
-  if(movement){
-    tank.AP().obstacleAvoidOn().wanderOn();
-    tank.AP().wanderOn().wanderFactors(60, 30, 20);
-    tank.AP().obstacleAvoidDetectBoxLength(15);
-  }
+  //if(movement){
+  //  tank.AP().obstacleAvoidOn().wanderOn();
+  //  tank.AP().wanderOn().wanderFactors(60, 30, 20);
+  //  tank.AP().obstacleAvoidDetectBoxLength(15);
+  //}
   tanks.add(tank);
 
 
