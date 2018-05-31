@@ -7,7 +7,6 @@ public class Turret {
   float yPos;
   float radius;
   int cannon_length;
-  boolean hasBomb;
   Shell shell;
   ShellPic shellPic;
   
@@ -21,36 +20,15 @@ public class Turret {
   
   public void drawTurret(){
     strokeWeight(1);
-    //fill(204, 50, 50);
     fill(255);
     ellipse(xPos,yPos,25,25);
-    drawBomb();
     strokeWeight(2);
     line(0, 0, this.cannon_length, 0);
   }
   
-  public void drawBomb(){
-    if(hasBomb == true){
-      fill(255);
+  public void drawBomb(int value){
+      fill(value);
       ellipse(xPos, yPos, 15, 15);
-    } else {
-      fill(0);
-      ellipse(xPos, yPos, 15, 15);
-      //System.out.println(hasBomb);
-    }
-  }
-  
-  public void bombShot2(){
-    this.hasBomb = true;
-  }
-  
-  public void bombShot(){
-    hasBomb = true;
-    //System.out.println(this.hasBomb);
-  }
-  
-  public void bombStay(){
-    hasBomb = false;
   }
   
   public void run(){
@@ -78,7 +56,4 @@ public class Turret {
     
   }
   
-  /*public void shot(){
-    Shell.Translate(TankOne.heading(), yPos.heading());
-  }*/
 }

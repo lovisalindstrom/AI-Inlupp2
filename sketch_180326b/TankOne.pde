@@ -43,7 +43,7 @@ public class TankOne extends Vehicle{
   
   void setup(){
   savedTime = millis();
-
+  this.tankPic.value = 0;
   waitingOver = true;
   System.out.println("sdasdasdasdasdasdasdasdasd");
   }
@@ -95,10 +95,7 @@ public class TankOne extends Vehicle{
     wander();
     for (int i = 0; i < tanks.size(); i++) {
       if (canSee(world, tanks.get(i).pos()) && tanks.get(i) != this) {
-        //System.out.println("HITTAD");
-        long finish = System.currentTimeMillis();
-        //System.out.println(finish-start);
-        
+        long finish = System.currentTimeMillis();    
         if(finish-start > 3000 && this.team.getTeamName() != tanks.get(i).team.getTeamName()){
           double distance = Vector2D.dist(this.position, tanks.get(i).position);
           if(tankPic.health == 2 && distance > 60){
@@ -116,10 +113,7 @@ public class TankOne extends Vehicle{
   }
   
   public void shoot(){
-    //System.out.println(turret);
-    //this.turret.bombShot();
-    turret.bombShot2();
-    //System.out.println(turret.hasBomb);
+    this.tankPic.value = 255;
     myAudio = new Audio();
     myAudio.blast();
     waitingOver = false;
@@ -177,6 +171,7 @@ public class TankPic extends PicturePS {
   Turret turret;
   Team team;
   int head;
+  int value;
   float size;
   int health;
   float posX,posY;
@@ -226,6 +221,7 @@ public class TankPic extends PicturePS {
     
     turret = new Turret(0, 0, 20, 25);
     turret.display();
+    turret.drawBomb(value);
     
 
     // Finished drawing
