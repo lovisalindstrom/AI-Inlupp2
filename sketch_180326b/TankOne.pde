@@ -123,13 +123,13 @@ public class TankOne extends Vehicle{
   
 
   
-  private void timer(){
-  int passedTime = (millis() - savedTime);
-  System.out.println(passedTime);
-  if(passedTime > totalTime){
-    waitingOver = true;
-  }
-}
+  //private void timer(){
+  //int passedTime = (millis() - savedTime);
+  //System.out.println(passedTime);
+  //if(passedTime > totalTime){
+   // waitingOver = true;
+  //}
+//}
   
   public void rotateCounterClock(){
 
