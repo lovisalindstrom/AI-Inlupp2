@@ -63,32 +63,32 @@ public class TankOne extends Vehicle{
   }
   
   public void runTank(){
-    if(this.tankPic.health <= 1){
-      this.velocity(0, 0);
-      if(this.tankPic.health == 0){
+    if(this.tankPic.health == 0){
         this.AP().wanderOff();
         tanks.remove(this);
-      }
-    }else {
-      if(fleeing){
-        flee();   
-      }
-      lookForTank();
     }
+    if(this.tankPic.health == 1){
+      this.velocity(0, 0);
+    }
+    lookForTank();
   }
 
   public void lookForTank() {
+    if(fleeing && this.tankPic.health > 1){
+      flee();
+    } else {
     wander();
-    for (int i = 0; i < tanks.size(); i++) {
-      if (canSee(world, tanks.get(i).pos()) && tanks.get(i) != this) {
-        long finish = System.currentTimeMillis();
+    long finish = System.currentTimeMillis();
         if(finish-start > 3000){
           this.tankPic.value = 0;
         }
+    for (int i = 0; i < tanks.size(); i++) {
+      if (canSee(world, tanks.get(i).pos()) && tanks.get(i) != this) {
         if(finish-start > 3000 && this.team.getTeamName() != tanks.get(i).team.getTeamName()){
           double distance = Vector2D.dist(this.position, tanks.get(i).position);
           if(tankPic.health == 2 && distance > 60){
             tanks.get(i).fleeing = true;
+            this.maxSpeed(160);
             tanks.get(i).enemies.add(this);
             this.enemies.add(tanks.get(i));
           }else{
@@ -100,6 +100,7 @@ public class TankOne extends Vehicle{
       }else{
        //System.out.println("INTE HITTAD"); 
       }
+    }
     }
   }
   
