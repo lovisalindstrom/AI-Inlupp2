@@ -14,7 +14,7 @@ public class TankOne extends Vehicle{
   Team team;
   long start = System.currentTimeMillis();
   TankPic tankPic;
-
+  boolean fleeing = false;
   //Audio
   Audio myAudio;
   AudioPlayer audioBlast;
@@ -25,6 +25,9 @@ public class TankOne extends Vehicle{
   int savedTime;
   int totalTime = 3000;
 
+  ArrayList<TankOne> enemies = new ArrayList<TankOne>();
+  
+  
   public TankOne(Vector2D position, double radius, Vector2D velocity, 
   double max_speed, Vector2D heading, double mass, 
   double max_turn_rate, double max_force, Team team, TankPic tankPic){
@@ -45,13 +48,7 @@ public class TankOne extends Vehicle{
   savedTime = millis();
   this.tankPic.value = 0;
   waitingOver = true;
-  System.out.println("sdasdasdasdasdasdasdasdasd");
   }
-
-  //public void moveForward(){
-  //  position.add(velocity);
-
-  //}
   
   public void setSpeed(Vector2D velocity, double max_speed, double max_force){
     this.velocity = velocity;
@@ -66,48 +63,38 @@ public class TankOne extends Vehicle{
   }
   
   public void runTank(){
-    
     if(this.tankPic.health <= 1){
       this.velocity(0, 0);
-      this.AP().wanderOff();
-    } else {
+      if(this.tankPic.health == 0){
+        this.AP().wanderOff();
+        tanks.remove(this);
+      }
+    }else {
+      if(fleeing){
+        flee();   
+      }
       lookForTank();
     }
-    
-    //if(this.tankPic.health == 3){
-    //  lookForTank();
-    //} else {
-    //  setSpeed(new Vector2D(0,0), 0, 0);
-      //this.velocity(0, 0);
-   // }
-    //if(this.tankPic.health == 2){
-     // this.AP().wanderOff();
-    //}
-    
-    //if(this.tankPic.health <= 1){
-    //  System.out.println("WanderOff");
-    //  this.AP().wanderOff();
-    //  if(this.tankPic.health == 1){
-    //    lookForTank();
-    //  }
-    //}else{
-    //  lookForTank();
-    //}
   }
 
   public void lookForTank() {
     wander();
     for (int i = 0; i < tanks.size(); i++) {
       if (canSee(world, tanks.get(i).pos()) && tanks.get(i) != this) {
-        long finish = System.currentTimeMillis();    
+        long finish = System.currentTimeMillis();
+        if(finish-start > 3000){
+          this.tankPic.value = 0;
+        }
         if(finish-start > 3000 && this.team.getTeamName() != tanks.get(i).team.getTeamName()){
           double distance = Vector2D.dist(this.position, tanks.get(i).position);
           if(tankPic.health == 2 && distance > 60){
-            System.out.println("Flyyyyyyyy");
-         }else{
+            tanks.get(i).fleeing = true;
+            tanks.get(i).enemies.add(this);
+            this.enemies.add(tanks.get(i));
+          }else{
            tanks.get(i).tankPic.healthDecrease();
-            shoot();
-            System.out.println(tanks.get(i).tankPic.health);
+           shoot();
+           System.out.println(tanks.get(i).tankPic.health);
           }
         }
       }else{
@@ -116,37 +103,30 @@ public class TankOne extends Vehicle{
     }
   }
   
+  public void flee(){
+    System.out.println("Flyyyyyyyy");
+    this.maxSpeed(160);
+    this.AP().evadeOn(enemies.get(0));
+        
+    if(Vector2D.dist(this.position, enemies.get(0).position) > 400){
+      stopFlee();
+    }
+  }
+  
+  public void stopFlee(){
+    this.maxSpeed(70);
+    this.AP().evadeOff();
+    fleeing = false;
+  }
+  
   public void shoot(){
-    this.tankPic.value = 255;
     myAudio = new Audio();
     myAudio.blast();
     waitingOver = false;
     savedTime = millis();
     start = System.currentTimeMillis();
+    this.tankPic.value = 255;
   }
-  
-
-  
-  //private void timer(){
-  //int passedTime = (millis() - savedTime);
-  //System.out.println(passedTime);
-  //if(passedTime > totalTime){
-   // waitingOver = true;
-  //}
-//}
-  
-  public void rotateCounterClock(){
-
-    
-  }
-
-  public void rotateClock(){
-
-    
-  }
-  
- 
-
   
   public void drawTank(){
     fill(128, 204, 255);
