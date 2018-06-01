@@ -15,10 +15,11 @@ public class TankOne extends Vehicle{
   long start = System.currentTimeMillis();
   TankPic tankPic;
   boolean fleeing = false;
+  boolean rotateOnce = false;
   //Audio
   Audio myAudio;
   AudioPlayer audioBlast;
-  AudioPlayer audioShot;
+  //AudioPlayer audioShot;
   
   //Timer
   boolean waitingOver = true;
@@ -90,12 +91,15 @@ public class TankOne extends Vehicle{
         if(finish-start > 3000 && this.team.getTeamName() != tanks.get(i).team.getTeamName()){
           double distance = Vector2D.dist(this.position, tanks.get(i).position);
           if(this.tankPic.health == 2 && distance > 70){
-            if(tanks.get(i).tankPic.health > 1){
+            
+            //if(tanks.get(i).tankPic.health > 1){
               tanks.get(i).fleeing = true;
+              System.out.println(tanks.get(i).fleeing);
               //this.maxSpeed(160);
+              //flee();
               tanks.get(i).enemies.add(this);
               this.enemies.add(tanks.get(i));
-            }
+            //}
           }else{
            tanks.get(i).tankPic.healthDecrease();
            shoot();
@@ -111,14 +115,19 @@ public class TankOne extends Vehicle{
   
   public void flee(){
     System.out.println("Flyyyyyyyy");
-    this.AP().wanderOff();
+    this.heading();
     this.maxSpeed(160);
-    this.AP().evadeOn(enemies.get(0)).evadeFactors(100);
-    
-    if(Vector2D.dist(this.position, enemies.get(0).position) > 100){
+    //rotateOnce = true;
+    //if(rotateOnce){
+    //  this.tankPic.rotateFlee();
+    //  rotateOnce = false;
+    //}
+    //this.AP().wanderOff();
+    //this.AP().evadeOn(enemies.get(0)).evadeFactors(100);
+    //if(this.tankPic.health == 2){
       
-      stopFlee();
-    }
+     // stopFlee();
+    //}
   }
   
   public void stopFlee(){
@@ -186,6 +195,10 @@ public class TankPic extends PicturePS {
       health -= 1;
     }
   }
+  
+  //public void rotateFlee(){
+  //  rotate(180);
+  //}
 
   public void draw(BaseEntity user, float posX, float posY, float velX, 
   float velY, float headX, float headY, float etime) {
