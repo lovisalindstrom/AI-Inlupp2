@@ -64,13 +64,14 @@ public class TankOne extends Vehicle{
   
   public void runTank(){
     if(this.tankPic.health == 0){
-        this.AP().wanderOff();
+        this.AP().allOff();
+        this.velocity(0, 0);
         tanks.remove(this);
     }
     if(this.tankPic.health == 1){
       this.velocity(0, 0);
       lookForTank();
-    } else {
+    }else if(this.tankPic.health > 1) {
       lookForTank();
     }
   }
@@ -88,10 +89,10 @@ public class TankOne extends Vehicle{
       if (canSee(world, tanks.get(i).pos()) && tanks.get(i) != this) {
         if(finish-start > 3000 && this.team.getTeamName() != tanks.get(i).team.getTeamName()){
           double distance = Vector2D.dist(this.position, tanks.get(i).position);
-          if(tankPic.health == 2 && distance > 60){
-            if(tanks.get(i).health > 1){
+          if(this.tankPic.health == 2 && distance > 70){
+            if(tanks.get(i).tankPic.health > 1){
               tanks.get(i).fleeing = true;
-              this.maxSpeed(160);
+              //this.maxSpeed(160);
               tanks.get(i).enemies.add(this);
               this.enemies.add(tanks.get(i));
             }
@@ -114,7 +115,8 @@ public class TankOne extends Vehicle{
     this.maxSpeed(160);
     this.AP().evadeOn(enemies.get(0)).evadeFactors(100);
     
-    if(Vector2D.dist(this.position, enemies.get(0).position) > 400){
+    if(Vector2D.dist(this.position, enemies.get(0).position) > 100){
+      
       stopFlee();
     }
   }
@@ -180,7 +182,9 @@ public class TankPic extends PicturePS {
   }
 
   public void healthDecrease(){
-    health -= 1;
+    if(health > 0){
+      health -= 1;
+    }
   }
 
   public void draw(BaseEntity user, float posX, float posY, float velX, 
