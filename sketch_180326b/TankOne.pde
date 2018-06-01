@@ -67,18 +67,22 @@ public class TankOne extends Vehicle{
   
   public void runTank(){
     
-    if(this.tankPic.health == 3){
-      lookForTank();
-    } else {
-      setSpeed(new Vector2D(0,0), 0, 0);
-      //this.AP().allOff();
-    //this.AP().obstacleAvoidOff().wanderOff();
-    //this.AP().wanderOff().wanderFactors(0, 0, 0);
-    //this.AP().obstacleAvoidDetectBoxLength(0);
-    }
-    if(this.tankPic.health == 2){
+    if(this.tankPic.health <= 1){
+      this.velocity(0, 0);
       this.AP().wanderOff();
+    } else {
+      lookForTank();
     }
+    
+    //if(this.tankPic.health == 3){
+    //  lookForTank();
+    //} else {
+    //  setSpeed(new Vector2D(0,0), 0, 0);
+      //this.velocity(0, 0);
+   // }
+    //if(this.tankPic.health == 2){
+     // this.AP().wanderOff();
+    //}
     
     //if(this.tankPic.health <= 1){
     //  System.out.println("WanderOff");
