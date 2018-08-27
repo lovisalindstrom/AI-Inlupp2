@@ -1,8 +1,11 @@
 //AI INLUPP 2
+//Grupp 11
+//Sebastian Bäckström Pino
+//Ellinor Gran
+//Lovisa Lindström
+
 public class Turret {
   
-  //Vector2D position;
-  //Vector2D velocity;
   float xPos;
   float yPos;
   float radius;
@@ -44,7 +47,6 @@ public class Turret {
     1.5, // mass
     2.5f, // turning rate
     2500);
-    //shellPic = new ShellPic(Shellpic, (float)25);
     
     return shell;
   }

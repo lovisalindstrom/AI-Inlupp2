@@ -1,4 +1,9 @@
 //AI INLUPP 2
+//Grupp 11
+//Sebastian Bäckström Pino
+//Ellinor Gran
+//Lovisa Lindström
+
 public class TankOne extends Vehicle{
   int health = 10;
   int radius;
@@ -15,8 +20,7 @@ public class TankOne extends Vehicle{
   long start = System.currentTimeMillis();
   TankPic tankPic;
   boolean fleeing = false;
-  boolean rotateOnce = false;
-  //Audio
+  //boolean rotateOnce = false;
   Audio myAudio;
   AudioPlayer audioBlast;
   //AudioPlayer audioShot;
@@ -78,38 +82,34 @@ public class TankOne extends Vehicle{
   }
 
   public void lookForTank() {
-    if(fleeing && this.tankPic.health > 1){
+    if(fleeing && this.tankPic.health > 1){ 
       flee();
     } else {
-    wander();
-    long finish = System.currentTimeMillis();
-        if(finish-start > 3000){
-          this.tankPic.value = 0;
-        }
-    for (int i = 0; i < tanks.size(); i++) {
-      if (canSee(world, tanks.get(i).pos()) && tanks.get(i) != this) {
-        if(finish-start > 3000 && this.team.getTeamName() != tanks.get(i).team.getTeamName()){
-          double distance = Vector2D.dist(this.position, tanks.get(i).position);
-          if(this.tankPic.health == 2 && distance > 70){
-            
-            //if(tanks.get(i).tankPic.health > 1){
-              tanks.get(i).fleeing = true;
+      wander();
+      long finish = System.currentTimeMillis();
+          if(finish-start > 3000){
+            this.tankPic.value = 0;
+          }
+      for (int i = 0; i < tanks.size(); i++) {
+        if (canSee(world, tanks.get(i).pos()) && tanks.get(i) != this) {
+          if(finish-start > 3000 && this.team.getTeamName() != tanks.get(i).team.getTeamName()){
+            double distance = Vector2D.dist(this.position, tanks.get(i).position);
+            if(this.tankPic.health == 2 && distance > 70){
+             
+              tanks.get(i).fleeing = true; //Make the enemy tank flee from this tank
               System.out.println(tanks.get(i).fleeing);
-              //this.maxSpeed(160);
-              //flee();
               tanks.get(i).enemies.add(this);
               this.enemies.add(tanks.get(i));
-            //}
-          }else{
-           tanks.get(i).tankPic.healthDecrease();
-           shoot();
-           System.out.println(tanks.get(i).tankPic.health);
+            }else{
+              shoot(); //Shoot tanks that are closer to us than 70px. 
+              tanks.get(i).tankPic.healthDecrease(); 
+              System.out.println(tanks.get(i).tankPic.health);
+            }
           }
+        }else{
+         System.out.println("Nothing found"); 
         }
-      }else{
-       //System.out.println("INTE HITTAD"); 
       }
-    }
     }
   }
   
@@ -117,17 +117,6 @@ public class TankOne extends Vehicle{
     System.out.println("Flyyyyyyyy");
     this.heading();
     this.maxSpeed(160);
-    //rotateOnce = true;
-    //if(rotateOnce){
-    //  this.tankPic.rotateFlee();
-    //  rotateOnce = false;
-    //}
-    //this.AP().wanderOff();
-    //this.AP().evadeOn(enemies.get(0)).evadeFactors(100);
-    //if(this.tankPic.health == 2){
-      
-     // stopFlee();
-    //}
   }
   
   public void stopFlee(){

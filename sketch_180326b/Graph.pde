@@ -1,4 +1,8 @@
 //AI INLUPP 2
+//Grupp 11
+//Sebastian Bäckström Pino
+//Ellinor Gran
+//Lovisa Lindström
 
 HashMap hm = new HashMap();
 

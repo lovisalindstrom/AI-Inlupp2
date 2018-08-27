@@ -1,4 +1,8 @@
 //AI INLUPP 2
+//Grupp 11
+//Sebastian Bäckström Pino
+//Ellinor Gran
+//Lovisa Lindström
 
 import game2dai.entities.*;
 import game2dai.entityshapes.ps.*;
@@ -147,7 +151,6 @@ public Obstacle createObstacle(Domain domain,int xPos,int yPos) {
   Obstacle ob = new Obstacle(new Vector2D(xPos, yPos), 100);
   obstaclePic = new BitmapPic(this, "data/tree01_v2.png");
   obstacles.add(ob);
-  //obPic = new ObstaclePic(this);
   ob.renderer(obstaclePic);
   return ob;
 }
